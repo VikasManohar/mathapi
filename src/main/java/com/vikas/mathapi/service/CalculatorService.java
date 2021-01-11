@@ -15,9 +15,9 @@ public class CalculatorService {
     }
 
     public double sub(List<Double> operands) {
-        double result = 0;
-        for (double operand : operands) {
-            result -= operand;
+        double result = operands.get(0);
+        for (int i = 1; i < operands.size(); i++) {
+            result -= operands.get(i);
         }
         return result;
     }
@@ -31,10 +31,6 @@ public class CalculatorService {
     }
 
     public double div(List<Double> operands) {
-        double result = 0;
-        for (double operand : operands) {
-            result /= operand;
-        }
-        return result;
+        return operands.get(0) / operands.get(1);
     }
 }
