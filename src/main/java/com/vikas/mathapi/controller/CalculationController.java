@@ -46,7 +46,7 @@ public class CalculationController {
             } else if ("div".equalsIgnoreCase(operator)) {
                 return responseHelper(String.valueOf(calculatorService.div(operands)));
             } else {
-                return jsonObject.put(RESULT, "Invalid operator").toString();
+                return jsonObject.put(RESULT, "Invalid operator, please consider : add, sub, mul, div").toString();
             }
         } catch (Exception e) {
             logger.error("Exception is : ", e);
