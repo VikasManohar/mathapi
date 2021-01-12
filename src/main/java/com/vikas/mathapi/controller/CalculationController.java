@@ -26,32 +26,62 @@ public class CalculationController {
     JSONObject jsonObject;
 
     private static final String RESULT = "result";
+    private static final String ERROR_RESULT = "Something went wrong";
 
-    // A single end point based on the value of the to handle all requests
-    @GetMapping(value = "/{operator}/{operands}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String calculator(@PathVariable String operator, @PathVariable List<Double> operands) {
+    @GetMapping(value = "/add/{operands}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String calculatorAdd(@PathVariable List<Double> operands) {
         if (operands.size() == 1) {
             return jsonObject.put(RESULT, String.valueOf(operands.get(0))).toString();
         }
         try {
-            if ("add".equalsIgnoreCase(operator)) {
-                return responseHelper(String.valueOf(calculatorService.add(operands)));
-            } else if ("sub".equalsIgnoreCase(operator)) {
-                return responseHelper(String.valueOf(calculatorService.sub(operands)));
-            } else if ("mul".equalsIgnoreCase(operator)) {
-                return responseHelper(String.valueOf(calculatorService.mul(operands)));
-            } else if ("div".equalsIgnoreCase(operator)) {
-                return responseHelper(String.valueOf(calculatorService.div(operands)));
-            } else {
-                return jsonObject.put(RESULT, "Invalid operator, please consider : add, sub, mul, div").toString();
-            }
+            return responseHelper(String.valueOf(calculatorService.add(operands)));
         } catch (Exception e) {
             logger.error("Exception is : ", e);
-            return jsonObject.put(RESULT, "Something went wrong").toString();
+            return jsonObject.put(RESULT, ERROR_RESULT).toString();
+        }
+    }
+
+    @GetMapping(value = "/sub/{operands}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String calculatorSub(@PathVariable List<Double> operands) {
+        if (operands.size() == 1) {
+            return jsonObject.put(RESULT, String.valueOf(operands.get(0))).toString();
+        }
+        try {
+            return responseHelper(String.valueOf(calculatorService.sub(operands)));
+        } catch (Exception e) {
+            logger.error("Exception is : ", e);
+            return jsonObject.put(RESULT, ERROR_RESULT).toString();
+        }
+    }
+
+    @GetMapping(value = "/mul/{operands}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String calculatorMul(@PathVariable List<Double> operands) {
+        if (operands.size() == 1) {
+            return jsonObject.put(RESULT, String.valueOf(operands.get(0))).toString();
+        }
+        try {
+            return responseHelper(String.valueOf(calculatorService.mul(operands)));
+        } catch (Exception e) {
+            logger.error("Exception is : ", e);
+            return jsonObject.put(RESULT, ERROR_RESULT).toString();
+        }
+    }
+
+    @GetMapping(value = "/div/{operands}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String calculatorDiv(@PathVariable List<Double> operands) {
+        if (operands.size() == 1) {
+            return jsonObject.put(RESULT, String.valueOf(operands.get(0))).toString();
+        }
+        try {
+            return responseHelper(String.valueOf(calculatorService.div(operands)));
+        } catch (Exception e) {
+            logger.error("Exception is : ", e);
+            return jsonObject.put(RESULT, ERROR_RESULT).toString();
         }
     }
 
     public String responseHelper(String result) {
+        logger.info("result is : {}", result);
         return jsonObject.put(RESULT, result).toString();
     }
 }
